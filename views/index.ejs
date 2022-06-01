@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="valogat">Válogatás:</label>
+    <input type="text" name="valogat" id="valogat">
+    <button onclick="levalogat()">Lekér</button>
+    <% for (let i=0; i < books.length; i++) { %>
+        <h1>Szerző: <%= books[i].szerzo %>
+        </h1>
+        <h1>Cím: <%= books[i].cim %>
+        </h1>
+        <h1>Ár: <%= books[i].ar %>
+        </h1>
+        <% } %>
+
+            <script>
+                function levalogat() {
+                    let valogat = document.getElementById('valogat').value;
+                    console.log(valogat);
+                    fetch('http://localhost:3001/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ valogat })
+                    }).then(() => console.log(valogat)).catch(error => console.log(error));
+                }
+            </script>
+</body>
+
+</html>
