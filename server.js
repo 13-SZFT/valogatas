@@ -29,7 +29,7 @@ const KonyvSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const Konyv = mongoose.model('book', KonyvSchema);
+const Konyv = mongoose.model('books', KonyvSchema);
 
 app.get('/', async (req, res, next) => {
     try {
@@ -41,7 +41,11 @@ app.get('/', async (req, res, next) => {
     }
 });
 
-app.post('/', async (req, res, next) => {
+app.get('/valogat', (req, res, next) => {
+    res.render('valogatott');
+});
+
+app.post('/valogat', async (req, res, next) => {
     try {
         const body = req.body;
         console.log(body.valogat);
@@ -49,15 +53,57 @@ app.post('/', async (req, res, next) => {
         const books = await Konyv.find();
 
         const valogatott = books.filter(value => {
-            return value.szerzo == body.valogat;
+            return value.szerzo.includes(body.valogat);
         })
         console.log(valogatott);
-        res.redirect('/');
+        res.json({ valogatott });
+    } catch (error) {
+        res.send(error.message);
+    }
+});
+
+app.get('/arval', (req, res, next) => {
+    res.render('arvalogat');
+});
+
+app.post('/arval', async (req, res, next) => {
+    try {
+        const body = req.body;
+        console.log(typeof +body.valogat);
+
+        const books = await Konyv.find();
+
+        const valogatott = books.filter(value => {
+            return value.ar > +body.valogat;
+        })
+        console.log(valogatott);
+        res.json({ valogatott });
+    } catch (error) {
+        res.send(error.message);
+    }
+});
+
+app.get('/kombi', (req, res, next) => {
+    res.render('kombinalt');
+});
+
+app.post('/kombi', async (req, res, next) => {
+    try {
+        const body = req.body;
+        console.log(body);
+
+        const books = await Konyv.find();
+
+        const valogatott = books.filter(value => {
+            return (value.ar > +body.arvalogat && value.szerzo.includes(body.nevvalogat));
+        })
+        console.log(valogatott);
+        res.json({ valogatott });
     } catch (error) {
         res.send(error.message);
     }
 });
 
 app.listen(3001, () => {
-    console.log(`A szerver fut a köv porton 3001`);
+    console.log(`A szerver fut a köv porton http://localhost:3001`);
 });

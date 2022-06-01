@@ -10,17 +10,20 @@
 
 <body>
     <p><a href="/">Nyitóoldal</a></p>
-    <label for="valogat">Válogatás:</label>
-    <input type="text" name="valogat" id="valogat">
+    <label for="nevvalogat">Név Válogatás:</label>
+    <input type="text" name="nevvalogat" id="nevvalogat">
+    <label for="arvalogat">ÁR Válogatás:</label>
+    <input type="number" name="arvalogat" id="arvalogat">
     <button onclick="levalogat()">Lekér</button>
     <div id="talalat"></div>
     <script>
         function levalogat() {
-            let valogat = document.getElementById('valogat').value;
-            fetch('http://localhost:3001/valogat', {
+            let nevvalogat = document.getElementById('nevvalogat').value;
+            let arvalogat = document.getElementById('arvalogat').value;
+            fetch('http://localhost:3001/kombi', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ valogat })
+                body: JSON.stringify({ nevvalogat, arvalogat })
             }).then(response => {
                 return response.json();
             })

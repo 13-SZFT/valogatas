@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <label for="valogat">Válogatás:</label>
-    <input type="text" name="valogat" id="valogat">
-    <button onclick="levalogat()">Lekér</button>
+    <p><a href="/valogat">Cím alapján válogatás oldal</a></p>
+    <p><a href="/arval">Ár alapján válogatás oldal</a></p>
+    <p><a href="/kombi">Kombináltválogatás oldal</a></p>
     <% for (let i=0; i < books.length; i++) { %>
         <h1>Szerző: <%= books[i].szerzo %>
         </h1>
@@ -21,17 +21,8 @@
         </h1>
         <% } %>
 
-            <script>
-                function levalogat() {
-                    let valogat = document.getElementById('valogat').value;
-                    console.log(valogat);
-                    fetch('http://localhost:3001/', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ valogat })
-                    }).then(() => console.log(valogat)).catch(error => console.log(error));
-                }
-            </script>
+
+
 </body>
 
 </html>

@@ -11,13 +11,13 @@
 <body>
     <p><a href="/">Nyitóoldal</a></p>
     <label for="valogat">Válogatás:</label>
-    <input type="text" name="valogat" id="valogat">
+    <input type="number" name="valogat" id="valogat">
     <button onclick="levalogat()">Lekér</button>
     <div id="talalat"></div>
     <script>
         function levalogat() {
             let valogat = document.getElementById('valogat').value;
-            fetch('http://localhost:3001/valogat', {
+            fetch('http://localhost:3001/arval', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ valogat })
